@@ -122,13 +122,13 @@ fn main() {
 
   let mut file = File::create("out.ppm").expect("Failed to create PPM file.");
   writeln!(&mut file, "P3"); 
-  writeln!(&mut file, "{} {}", 401, 401);
+  writeln!(&mut file, "{} {}", 801, 801);
   writeln!(&mut file, "{}", 255);
 
-  for z in (-201..200).rev() {
-    for x in -200..201 {
-      let x = (x as i32 as f64)/10.0;
-      let z = (z as i32 as f64)/10.0;
+  for z in (-401..400).rev() {
+    for x in -400..401 {
+      let x = (x as i32 as f64)/20.0;
+      let z = (z as i32 as f64)/20.0;
 
       let r = Ray::from(camera.clone(), Vec3::minus(&Vec3::from(x, 8.0, z), &camera));
 
