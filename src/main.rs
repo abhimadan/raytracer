@@ -136,26 +136,23 @@ fn main() {
       let mut pixel_colour = Vec3::from(0.0, 0.0, 0.0);
 
       for &s in [&s1, &s2].iter() {
-        match s.intersect(&r) {
-          None => {},
-          Some((point, len)) => {
-            if (len < mindist) {
-              mindist = len;
+        if let Some((point, len)) = s.intersect(&r) {
+          if (len < mindist) {
+            mindist = len;
 
-              let normal = Vec3::minus(&point, &s.center).normalize();
-              let to_light = Vec3::minus(&light, &point).normalize();
-              let shade = if Vec3::dot(&normal, &to_light) < 0.0001 {
-                0.0
-              } else {
-                Vec3::dot(&normal, &to_light)
-              };
+            let normal = Vec3::minus(&point, &s.center).normalize();
+            let to_light = Vec3::minus(&light, &point).normalize();
+            let shade = if Vec3::dot(&normal, &to_light) < 0.0001 {
+              0.0
+            } else {
+              Vec3::dot(&normal, &to_light)
+            };
 
-              // Scale colour by ambient and diffuse coefficients,
-              // using Lambert shading for diffuse amount.
-              let intensity = ambient + diffuse*shade;
-              pixel_colour = s.colour.scale(intensity);
-            }
-          },
+            // Scale colour by ambient and diffuse coefficients,
+            // using Lambert shading for diffuse amount.
+            let intensity = ambient + diffuse*shade;
+            pixel_colour = s.colour.scale(intensity);
+          }
         }
       }
 
