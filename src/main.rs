@@ -13,9 +13,9 @@ struct Vec3 {
 impl Vec3 {
   fn from (x: f64, y: f64, z: f64) -> Vec3 {
     Vec3 {
-      x: x,
-      y: y,
-      z: z,
+      x,
+      y,
+      z,
     }
   }
 
@@ -66,11 +66,11 @@ struct Sphere {
 }
 
 impl Sphere {
-  fn from(c: Vec3, r: f64, col: Vec3) -> Sphere {
+  fn from(center: Vec3, radius: f64, colour: Vec3) -> Sphere {
     Sphere {
-      center: c,
-      radius: r,
-      colour: col,
+      center,
+      radius,
+      colour,
     }
   }
 
@@ -79,8 +79,8 @@ impl Sphere {
     let b = Vec3::dot(&ray.direction.scale(2.0),
     &Vec3::minus(&ray.origin, &self.center));
     let c = Vec3::dot(&Vec3::minus(&ray.origin, &self.center),
-    &Vec3::minus(&ray.origin, &self.center))
-      - self.radius*self.radius;
+                      &Vec3::minus(&ray.origin, &self.center))
+              - self.radius*self.radius;
 
     let discriminant = b*b - 4.0*a*c;
     if discriminant <= 0.0 {
@@ -113,8 +113,8 @@ fn main() {
   // Light sources
   let light = Vec3::from(-20.0, 10.0, 32.0);
 
-  // View plane at (-10, 8, 10) to (10, 8, -10)
-  let camera = Vec3::from(0.0, -15.0, 1.0);
+  // View plane at (-20, 8, 20) to (20, 8, -20)
+  let camera = Vec3::from(0.0, -25.0, 1.0);
 
   // Light intensity proportions
   let ambient = 0.2;
@@ -167,4 +167,3 @@ fn main() {
     writeln!(&mut file, "");
   }
 }
-
