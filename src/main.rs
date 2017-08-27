@@ -3,7 +3,6 @@ mod geometry;
 use geometry::Vec3;
 use geometry::Ray;
 use geometry::Sphere;
-use std::io::prelude::*;
 use std::fs::File;
 use std::io::Write;
 
@@ -23,9 +22,9 @@ fn main() {
     let diffuse = 0.8;
 
     let mut file = File::create("out.ppm").expect("Failed to create PPM file.");
-    writeln!(&mut file, "P3"); 
-    writeln!(&mut file, "{} {}", 401, 401);
-    writeln!(&mut file, "{}", 255);
+    let _ = writeln!(&mut file, "P3");
+    let _ = writeln!(&mut file, "{} {}", 401, 401);
+    let _ = writeln!(&mut file, "{}", 255);
 
     for z in (-200..201).rev() {
         for x in -200..201 {
@@ -48,7 +47,7 @@ fn main() {
 
                     for &s in [&s1, &s2].iter() {
                         if let Some((point, len)) = s.intersect(&r) {
-                            if (len < mindist) {
+                            if len < mindist {
                                 mindist = len;
 
                                 let normal = Vec3::minus(&point, &s.center).normalize();
@@ -76,8 +75,8 @@ fn main() {
             red /= 9;
             green /= 9;
             blue /= 9;
-            write!(&mut file, "{} {} {}\t", red, green, blue);
+            let _ = write!(&mut file, "{} {} {}\t", red, green, blue);
         }
-        writeln!(&mut file, "");
+        let _ = writeln!(&mut file, "");
     }
 }
